@@ -27,17 +27,23 @@ The config jumper is shown in the top left corner here:
 
 ### Model I Version 
 
-It plugs onto the Model 1 expansion port, either directly using the edge connector, or via a short cable. 
+It plugs onto the Model 1 expansion port, either directly using the edge connector: 
+
+![XMEM](pics/xmem.jpg)
+
+or via a short cable:
 
 ![XMEM 2](pics/xmem-ei-cable.jpg)
 
-![XMEM 2](pics/xmem-ei-cable2.jpg)
+![XMEM 3](pics/xmem-ei-cable2.jpg)
+
 
 It can be used with or without the Expansion Interface (EI).  
 
 If used without EI, then you will have 48 KBs of RAM available to ROM BASIC (as well as the extra memory banks, of course): 
 
-![XMEM](pics/xmem.jpg)
+
+![XMEM 2](pics/xmem-plain.jpg)
 
 If used with the EI, then it "shadows" (i.e., disables reads from) the DRAM memory installed in the EI. No modifications to either the Model 1 or EI are necessary: 
 
