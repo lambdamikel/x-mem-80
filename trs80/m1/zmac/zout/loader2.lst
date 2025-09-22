@@ -1,0 +1,656 @@
+   1:				
+   2:     -	8000          		org $8000 
+   3:				
+   4:     -	A000          	MySafeStack	equ $a000 	
+   5:				
+   6:					
+   7:				;; Model I/III addresses
+   8:     -	441C          	@fspec  equ 441ch
+   9:     -	4420          	@init   equ 4420h
+  10:     -	4424          	@open   equ 4424h
+  11:     -	4428          	@close  equ 4428h
+  12:     -	4436          	@read   equ 4436h
+  13:     -	4439          	@write  equ 4439h
+  14:     -	4409          	@error  equ 4409h
+  15:     -	4030          	@abort  equ 4030h       
+  16:				
+  17:     -	4467          	@DSPLY		equ	$4467
+  18:     -	402D          	@EXIT		equ	$402d
+  19:     -	002B          	@KBD    	equ 	$002b 
+  20:     -	0049          	@KEY    	equ 	$0049 
+  21:     -	0033          	@DSP    	equ 	$0033
+  22:				
+  23:     -	0041          	XMEML		equ 	65	; use lower 16 KB page mode 8000 - BFFF
+  24:     -	0042          	XMEMH		equ 	66	; use upper 16 KB page mode C000 - FFFF
+  25:				
+  26:     -	8000  2A2A2A2A	errorm:	ascii   '***** DISK ERROR! ANY KEY *****', ENTER
+	              2A204449
+	              534B2045
+	              52524F52
+	              2120414E
+	              59204B45
+	              59202A2A
+	              2A2A2A0D
+  27:					
+  28:     -	000D          	ENTER	equ	$0d ; @DSPLY with newline
+  29:				
+  30:     -	002A          	lrlerr:		equ 42
+  31:				
+  32:     -	8020  534F4E47	filename:	ascii "SONG"
+  33:     -	8024  3F2F4D49	filenamenr:	ascii "?/MID", ENTER
+	              440D
+  34:     -	802A  01      	maxpage:	defb 1
+  35:				
+  36:     -	802B  0D      	emptyline	ascii  ENTER
+  37:     -	802C  2A2A2A20	title1		ascii  '*** MIDI/80 X-MEM/80 PLAYBACK - (C) 2025 LambdaMikel ***', ENTER
+	              4D494449
+	              2F383020
+	              582D4D45
+	              4D2F3830
+	              20504C41
+	              59424143
+	              4B202D20
+	              28432920
+	              32303235
+	              204C616D
+	              6264614D
+	              696B656C
+	              202A2A2A
+	              0D
+  38:     -	8065  20202020	title2		ascii  '    SONG?/MID', ENTER
+	              534F4E47
+	              3F2F4D49
+	              440D
+  39:     -	8073  456E7465	title3		ascii  'Enter max. page number <n> (SONG0/MID - SONG<n>/MID): ', ENTER
+	              72206D61
+	              782E2070
+	              61676520
+	              6E756D62
+	              6572203C
+	              6E3E2028
+	              534F4E47
+	              302F4D49
+	              44202D20
+	              534F4E47
+	              3C6E3E2F
+	              4D494429
+	              3A200D
+  40:     -	80AA  456E7465	title4		ascii  'Enter playback speed (Model 3/4 = 4, Model 1 = 6)? ', ENTER 
+	              7220706C
+	              61796261
+	              636B2073
+	              70656564
+	              20284D6F
+	              64656C20
+	              332F3420
+	              3D20342C
+	              204D6F64
+	              656C2031
+	              203D2036
+	              293F200D
+  41:				
+  42:     -	80DE  4E6F7720	showloading	ascii  'Now loading: ', ENTER
+	              6C6F6164
+	              696E673A
+	              200D
+  43:     -	80EC  53656C65	showplaying	ascii  'Selecting: ', ENTER
+	              6374696E
+	              673A200D
+  44:				
+  45:     -	80F8  0D      	endm0		ascii  ENTER
+  46:     -	80F9  5468616E	endm1		ascii  'Thanks for listening!', ENTER
+	              6B732066
+	              6F72206C
+	              69737465
+	              6E696E67
+	              210D
+  47:     -	810F  0D      	endm2		ascii  ENTER
+  48:     -	8110  4D616B69	endm3		ascii  'Making your own songs is easy:', ENTER
+	              6E672079
+	              6F757220
+	              6F776E20
+	              736F6E67
+	              73206973
+	              20656173
+	              793A0D
+  49:     -	812F  68747470	endm4 		ascii  'https://github.com/lambdamikel/MIDI-80', ENTER
+	              733A2F2F
+	              67697468
+	              75622E63
+	              6F6D2F6C
+	              616D6264
+	              616D696B
+	              656C2F4D
+	              4944492D
+	              38300D
+  50:     -	8156  0D      	endm5 		ascii  ENTER
+  51:				
+  52:     -	8157  00      	lastbyte 	defb 	0
+  53:				
+  54:     -	8158  00      	timer0delta	defb 	0
+  55:				
+  56:     -	8159  00      	curcount 	defb 	0
+  57:     -	815A  00      	curcounth 	defb 	0
+  58:					
+  59:     -	815B  00      	midiadr 	defb 	0
+  60:     -	815C  00      	midiadrh 	defb 	0     
+  61:				
+  62:     -	815D  00      	timer0	 	defb 	0 
+  63:     -	815E  00      	timer	 	defb 	0
+  64:     -	815F  00      	timerh	 	defb 	0
+  65:				
+  66:     -	8160          	dcb:		defs 48			; 48 for Model III TRSDOS 1.3   
+  67:     -	8190          	iobuf:		defs 256
+  68:				
+  69:     -	8290          	main:
+  70:				
+  71:    0+4	8290  F3      		di 
+  72:    4+7	8291  3E00    		ld a, 0
+  73:   11+11	8293  D341    		out (XMEML), a
+  74:					
+  75:   22+7	8295  3E04    		ld a, 4
+  76:   29+11	8297  D342    		out (XMEMH), a
+  77:   40+4	8299  FB      		ei
+  78:					
+  79:   44+10	829A  3100A0  		LD    SP,MySafeStack
+  80:				
+  81:   54+10	829D  212C80  		ld hl,title1
+  82:   64+17	82A0  CD6744  		call @DSPLY
+  83:   81+10	82A3  216580  		ld hl,title2
+  84:   91+17	82A6  CD6744  		call @DSPLY
+  85:  108+10	82A9  212B80  	 	ld hl,emptyline
+  86:  118+17	82AC  CD6744  		call @DSPLY
+  87:  135+10	82AF  217380  		ld hl,title3
+  88:  145+17	82B2  CD6744  		call @DSPLY
+  89:				
+  90:  162+17	82B5  CD4900  		call @KEY
+  91:  179+13	82B8  322A80  		ld (maxpage), a
+  92:  192+17	82BB  CD3300  		call @DSP
+  93:  209+7	82BE  3E30    		ld a, '0' 
+  94:  216+13	82C0  322480  		ld (filenamenr), a
+  95:				
+  96:  229+10	82C3  212B80  		ld hl,emptyline
+  97:  239+17	82C6  CD6744  		call @DSPLY
+  98:				
+  99:     -	82C9          	load_page:
+ 100:						
+ 101:  256+10	82C9  212B80  		ld hl,emptyline
+ 102:  266+17	82CC  CD6744  		call @DSPLY
+ 103:				
+ 104:  283+10	82CF  21DE80  		ld hl,showloading
+ 105:  293+17	82D2  CD6744  		call @DSPLY
+ 106:					
+ 107:  310+10	82D5  212080  		ld hl, filename
+ 108:  320+17	82D8  CD6744  		call @DSPLY
+ 109:				
+ 110:  337+17	82DB  CD4584  		call selectmempage
+ 111:  354+17	82DE  CDF283  		call loaddisk
+ 112:				
+ 113:  371+13	82E1  3A2A80  		ld a, (maxpage)
+ 114:  384+4	82E4  47      		ld b, a
+ 115:  388+13	82E5  3A2480  		ld a, (filenamenr)
+ 116:  401+4	82E8  B8      		cp b
+ 117:  405+7+5	82E9  2806    		jr z, startplayback
+ 118:				
+ 119:  412+10	82EB  212480  		ld hl, filenamenr
+ 120:  422+11	82EE  34      		inc (hl)
+ 121:				 
+ 122:  433+12	82EF  18D8    		jr load_page 
+ 123:					
+ 124:				
+ 125:     -	82F1          	startplayback:
+ 126:				
+ 127:  445+7	82F1  3E30    		ld a, '0' 
+ 128:  452+13	82F3  322480  		ld (filenamenr), a
+ 129:				
+ 130:  465+17	82F6  CD4584  		call selectmempage 
+ 131:  482+17	82F9  CD5184  		call newbank
+ 132:				
+ 133:					;;  ask for playback speed
+ 134:  499+10	82FC  212B80  	 	ld hl,emptyline
+ 135:  509+17	82FF  CD6744  		call @DSPLY
+ 136:				
+ 137:  526+10	8302  21AA80  		ld hl,title4
+ 138:  536+17	8305  CD6744  		call @DSPLY
+ 139:				
+ 140:  553+17	8308  CDDD83  		call allnotesoff
+ 141:				
+ 142:  570+17	830B  CD4900  		call @KEY    
+ 143:  587+7	830E  D630    		sub 48 ; "0" = 48
+ 144:				
+ 145:  594+13	8310  325881  		ld (timer0delta), a
+ 146:  607+13	8313  325D81  		ld (timer0), a
+ 147:				
+ 148:					;; M3 - turn off display waitstates
+ 149:					;; not necessary
+ 150:				
+ 151:					;in  a,($ff)
+ 152:					;or  a,$10
+ 153:					;and a,~$20
+ 154:					;out ($ec),a
+ 155:				
+ 156:					;; play 
+ 157:				
+ 158:  620+17	8316  CD5184  		call newbank 
+ 159:				
+ 160:     -	8319          	next:
+ 161:				
+ 162:					;ld	a,(k_Q >> 8)
+ 163:					;and	k_Q % $100
+ 164:					;call	nz, endofsong
+ 165:				
+ 166:  637+17	8319  CD2B00  		call @KBD
+ 167:  654+7	831C  FE51    		cp 81 ; Q = quit 
+ 168:  661+10	831E  CA6A83  		jp z, endofsong
+ 169:				
+ 170:				
+ 171:     -	8321          	midiavail:	
+ 172:				
+ 173:  671+17	8321  CD3483  		call avail
+ 174:  688+7	8324  FE01    		cp 1
+ 175:  695+7+5	8326  2807    		jr z, process
+ 176:  702+7	8328  FE02    		cp 2  ; 2 = end of data
+ 177:  709+10	832A  CA6A83  		jp z, endofsong
+ 178:  719+12	832D  18EA    		jr next
+ 179:				
+ 180:					
+ 181:     -	832F          	process:
+ 182:					
+ 183:  731+17	832F  CDA983  		call outa
+ 184:  748+12	8332  18E5    		jr next     
+ 185:				
+ 186:     -	8334          	avail:
+ 187:					
+ 188:  760+17	8334  CDC283  		call get_timer ; get timer -> HL 
+ 189:  777+20	8337  ED5B5981		ld de,(curcount)
+ 190:  797+7	833B  1600    		ld d,0
+ 191:  804+15	833D  ED52    		sbc hl,de  
+ 192:  819+7+5	833F  3826    		jr c,notyet ; current ticker (HL) smaller than MIDI next counter (DE)
+ 193:				
+ 194:  826+16	8341  2A5B81  		ld hl,(midiadr) ; load MIDI data for current block 
+ 195:  842+6	8344  23      		inc hl ; advance to read MIDI data for the match    
+ 196:  848+7	8345  46      		ld b,(hl) ; read MIDI data for current block 
+ 197:  855+6	8346  23      		inc hl ; pointer points to next MIDI block, pre-load curcounter
+ 198:  861+4	8347  7C      		ld a,h
+ 199:  865+4	8348  B5      		or l
+ 200:  869+10+7	8349  CC9583  		call z,nextbank
+ 201:  879+11	834C  E5      		push hl ; save current pointer, preload counter
+ 202:				
+ 203:  890+7	834D  5E      		ld e,(hl) 
+ 204:  897+7	834E  1600    		ld d,0
+ 205:  904+20	8350  ED535981		ld (curcount),de ; store next counter for fast access during playback
+ 206:  924+4	8354  7B      		ld a,e
+ 207:  928+7	8355  FEFF    		cp 255
+ 208:  935+7+5	8357  2811    		jr z,endofsong
+ 209:  942+10	8359  215781  		ld hl,lastbyte
+ 210:  952+7	835C  70      		ld (hl), b ; store MIDI byte there     
+ 211:  959+10	835D  D1      		pop de ; get saved pointer	
+ 212:  969+10	835E  215B81  		ld hl,midiadr
+ 213:  979+7	8361  73      		ld (hl),e ; update pointer
+ 214:  986+6	8362  23      		inc hl
+ 215:  992+7	8363  72      		ld (hl),d
+ 216:  999+7	8364  3E01    		ld a,1 ; signal byte is available
+ 217: 1006+10	8366  C9      		ret
+ 218:				
+ 219:     -	8367          	notyet:	
+ 220:				
+ 221: 1016+7	8367  3E00    		ld a,0 ; signal no byte available
+ 222: 1023+10	8369  C9      		ret
+ 223:				
+ 224:     -	836A          	endofsong:
+ 225:				
+ 226: 1033+10	836A  21F880  		ld hl,endm0
+ 227: 1043+17	836D  CD6744  		call @DSPLY
+ 228: 1060+10	8370  21F980  		ld hl,endm1
+ 229: 1070+17	8373  CD6744  		call @DSPLY
+ 230: 1087+10	8376  210F81  		ld hl,endm2
+ 231: 1097+17	8379  CD6744  		call @DSPLY
+ 232: 1114+10	837C  211081  		ld hl,endm3
+ 233: 1124+17	837F  CD6744  		call @DSPLY
+ 234: 1141+10	8382  212F81  		ld hl,endm4
+ 235: 1151+17	8385  CD6744  		call @DSPLY
+ 236: 1168+10	8388  215681  		ld hl,endm5
+ 237: 1178+17	838B  CD6744  		call @DSPLY
+ 238:				
+ 239:					; ld a,"@"
+ 240:					; call @DSP 
+ 241:				
+ 242: 1195+17	838E  CDDD83  		call allnotesoff
+ 243: 1212+4	8391  FB      		ei
+ 244: 1216+17	8392  CD2D40  		call @EXIT
+ 245:					; ret
+ 246:				
+ 247:     -	8395          		nextbank:
+ 248: 1233+13	8395  3A2A80  		ld a, (maxpage)
+ 249: 1246+4	8398  47      		ld b, a
+ 250:					
+ 251: 1250+10	8399  212480  		ld hl, filenamenr
+ 252: 1260+7	839C  7E      		ld a,(hl) 
+ 253:				
+ 254: 1267+4	839D  B8      		cp b
+ 255:				
+ 256: 1271+10	839E  CA6A83  		jp z, endofsong 
+ 257:					
+ 258: 1281+11	83A1  34      		inc (hl)
+ 259: 1292+17	83A2  CD4584  		call selectmempage 
+ 260: 1309+17	83A5  CD5184  		call newbank
+ 261:				
+ 262: 1326+10	83A8  C9      		ret
+ 263:					
+ 264:     -	83A9          	outa:
+ 265:				
+ 266: 1336+13	83A9  3A5781  		ld a,(lastbyte)
+ 267: 1349+11	83AC  D308    		out (8),a
+ 268:				
+ 269: 1360+10	83AE  110000  		ld de,0 ; clear ticker 
+ 270: 1370+10	83B1  210000  		ld hl,0
+ 271: 1380+16	83B4  225E81  		ld (timer),hl
+ 272:					
+ 273: 1396+10	83B7  C9      		ret
+ 274:					 
+ 275:     -	83B8          	short_delay:
+ 276: 1406+10	83B8  119000  		ld de,$0090
+ 277:     -	83BB          	loop: 
+ 278: 1416+6	83BB  1B      		dec de
+ 279: 1422+4	83BC  7A      		ld a,d
+ 280: 1426+4	83BD  B3      		or e
+ 281: 1430+10	83BE  C2BB83  		jp nz,loop
+ 282: 1440+10	83C1  C9      		ret 
+ 283:				
+ 284:     -	83C2          	get_timer:
+ 285: 1450+16	83C2  2A5E81  		ld hl, (timer)
+ 286: 1466+13	83C5  3A5D81  		ld a, (timer0)
+ 287: 1479+4	83C8  3D      		dec a
+ 288: 1483+13	83C9  325D81  		ld (timer0), a
+ 289: 1496+7	83CC  FE00    		cp 0 ; zero ?
+ 290: 1503+5+6	83CE  C0      		ret nz 
+ 291:				
+ 292: 1508+13	83CF  3A5881  		ld a, (timer0delta) 
+ 293: 1521+13	83D2  325D81  		ld (timer0), a
+ 294:				
+ 295: 1534+16	83D5  2A5E81  		ld hl, (timer)	
+ 296: 1550+6	83D8  23      		inc hl
+ 297: 1556+16	83D9  225E81  		ld (timer), hl
+ 298:					
+ 299: 1572+10	83DC  C9      		ret 
+ 300:				
+ 301:     -	83DD          	allnotesoff:
+ 302:				
+ 303:					;; doesn't work
+ 304:				
+ 305:					;;  Proteus mode: F0 7E 00 09 02 F7
+ 306:				
+ 307:					; ld a,$f0 
+ 308:					; call outa1
+ 309:					; call short_delay
+ 310:				
+ 311:					; ld a,$7e
+ 312:					; call outa1
+ 313:					; call short_delay
+ 314:				
+ 315:					; ld a,$00
+ 316:					; call outa1
+ 317:					; call short_delay
+ 318:				
+ 319:					; ld a,$09
+ 320:					; call outa1
+ 321:					; call short_delay
+ 322:				
+ 323:					; ld a,$02
+ 324:					; call outa1
+ 325:					; call short_delay
+ 326:				
+ 327:					; ld a,$f7
+ 328:					; call outa1
+ 329:					; call short_delay
+ 330:				
+ 331:					
+ 332:					
+ 333:					; ;; send all notes off: 10110000 = 176, 123, 0
+ 334:					; ld a,176 ; CC 
+ 335:					; call outa1
+ 336:					; call short_delay
+ 337:				
+ 338:					; ld a,124 		; OMNI MODE ON also clears notes! 
+ 339:					; call outa1
+ 340:					; call short_delay
+ 341:				
+ 342:					; ld a,0 
+ 343:					; call outa1
+ 344:					; call short_delay
+ 345:				
+ 346:					; ld a,176 ; CC 
+ 347:					; call outa1
+ 348:					; call short_delay
+ 349:				
+ 350:					; ld a,123 		; OMNI MODE ON also clears notes! 
+ 351:					; call outa1
+ 352:					; call short_delay
+ 353:				
+ 354:					; ld a,0 
+ 355:					; call outa1
+ 356:					; call short_delay
+ 357:				
+ 358: 1582+10	83DD  C9      		ret
+ 359:				
+ 360:				
+ 361:				
+ 362:     -	83DE          	byte2ascii: 			; input c, output de ASCII 
+ 363: 1592+4	83DE  79      		ld a, c
+ 364: 1596+4	83DF  1F      		rra
+ 365: 1600+4	83E0  1F      		rra
+ 366: 1604+4	83E1  1F      		rra
+ 367: 1608+4	83E2  1F      		rra
+ 368: 1612+17	83E3  CDE883  		call convnibble 
+ 369: 1629+4	83E6  57      		ld d, a	
+ 370: 1633+4	83E7  79      		ld  a,c
+ 371:					
+ 372:     -	83E8          	convnibble:
+ 373: 1637+7	83E8  E60F    		and  $0F
+ 374: 1644+7	83EA  C690    		add  a,$90
+ 375: 1651+4	83EC  27      		daa
+ 376: 1655+7	83ED  CE40    		adc  a,$40
+ 377: 1662+4	83EF  27      		daa
+ 378: 1666+4	83F0  5F      		ld e, a	
+ 379:				
+ 380: 1670+10	83F1  C9      		ret
+ 381:					
+ 382:     -	83F2          	loaddisk:
+ 383:				
+ 384: 1680+10	83F2  212080  		ld hl, filename
+ 385:					
+ 386: 1690+10	83F5  116081  		ld de, dcb              ; ready to get TRS-80 filename from (HL)
+ 387: 1700+17	83F8  CD1C44  	        call @fspec
+ 388: 1717+10	83FB  C23B84  	        jp nz, diskerror 
+ 389:				        
+ 390: 1727+10	83FE  219081  		ld hl, iobuf
+ 391: 1737+10	8401  116081  	        ld de, dcb
+ 392: 1747+7	8404  0600    	        ld b, 0
+ 393: 1754+17	8406  CD2444  	        call @open               ; open the file
+ 394: 1771+7+5	8409  2804    	        jr z, readfile
+ 395:				        
+ 396: 1778+4	840B  4F      	        ld c, a                  ; error code 
+ 397: 1782+10	840C  C33B84  	        jp diskerror
+ 398:				        
+ 399:     -	840F          	readfile:
+ 400:				
+ 401:				        ; call getern
+ 402: 1792+7	840F  0640    		ld b, 64 		; 256 * 64 = 16384 = 16 KB /MID files 
+ 403: 1799+7	8411  0E00    		ld c, 0
+ 404:				
+ 405: 1806+10	8413  1100C0  		ld de, mididata
+ 406:					
+ 407: 1816+11	8416  D5      	rloop:  push de
+ 408:				
+ 409: 1827+10	8417  116081  		ld de, dcb
+ 410: 1837+10	841A  219081  		ld hl, iobuf 
+ 411: 1847+17	841D  CD3644  		call @read              ; read file
+ 412:				
+ 413: 1864+10	8420  D1      		pop de
+ 414:					
+ 415:				        ;; jr z, rok               ; got a full 256 bytes
+ 416:				        
+ 417:				        ;; ld c, a
+ 418:				        ;; jp diskerror          ; oops, i/o error
+ 419:				        ;; ret
+ 420:				       
+ 421: 1874+10	8421  219081  	rok:    ld	hl,iobuf	; source hl; de = datastart + page offset
+ 422: 1884+11	8424  C5      		push bc 		; save pagecounter 
+ 423: 1895+10	8425  010001  		ld	bc,256 		; # bytes to copy
+ 424: 1905+11	8428  D5      		push de			; save de
+ 425:				
+ 426: 1916+4	8429  F3      		di 
+ 427: 1920+16+5	842A  EDB0    		ldir 			; hl -> de / bc bytes
+ 428: 1936+4	842C  FB      		ei 
+ 429: 1940+10	842D  D1      		pop de			; restore de 
+ 430: 1950+10	842E  C1      		pop bc			; restore pagecounter
+ 431:					
+ 432: 1960+4	842F  14      		inc d			; inc. page offset 
+ 433: 1964+8+5	8430  10E4    		djnz rloop
+ 434:				
+ 435: 1972+10	8432  116081  	        ld de, dcb
+ 436: 1982+17	8435  CD2844  	        call @close              ; close the TRS-80 file
+ 437: 1999+7+5	8438  2800    	        jr z, diskreadok
+ 438:				        
+ 439:				        ;; ld c, a
+ 440:				        ;; jp diskerror           ; oops, i/o error
+ 441:				        
+ 442: 2006+10	843A  C9      	diskreadok: ret 
+ 443:				
+ 444:     -	843B          	diskerror:
+ 445: 2016+10	843B  210080  		ld	hl,errorm
+ 446: 2026+17	843E  CD6744  		call @DSPLY
+ 447: 2043+17	8441  CD4900  		call @KEY
+ 448: 2060+10	8444  C9      		ret
+ 449:				
+ 450:     -	8445          	selectmempage:	
+ 451:					;; select 32 KB page
+ 452:					;; push af
+ 453:					;; push hl
+ 454:					;; push de
+ 455:					;; push bc
+ 456: 2070+13	8445  3A2480  		ld a, (filenamenr)	
+ 457: 2083+7	8448  D630    	 	sub '0'
+ 458: 2090+7	844A  C604    		add 4
+ 459: 2097+4	844C  F3      		di
+ 460:								; cause 16 KB page 0 is used for the program!
+ 461: 2101+11	844D  D342    		out (XMEMH), a 		; upper 16 KB
+ 462: 2112+4	844F  FB      		ei 
+ 463:				
+ 464:					;; ld hl,showplaying 
+ 465:					;; call @DSPLY
+ 466:					
+ 467:					;; ld hl, filename
+ 468:					;; call @DSPLY
+ 469:					
+ 470:					;; pop bc
+ 471:					;; pop de 
+ 472:					;; pop hl
+ 473:					;; pop af
+ 474:					
+ 475: 2116+10	8450  C9      		ret 
+ 476:				
+ 477:     -	8451          	newbank:
+ 478: 2126+10	8451  215B81  		ld hl,midiadr ; write mididata start adress &4000 into pointer reg.
+ 479: 2136+10	8454  3600    		ld (hl),mididata mod 256
+ 480: 2146+6	8456  23      		inc hl  
+ 481: 2152+10	8457  36C0    		ld (hl),mididata / 256   
+ 482: 2162+16	8459  2A5B81  		ld hl,(midiadr) ; load first time delta from data   
+ 483: 2178+7	845C  5E      		ld e,(hl) ; store first time delta into curcount    
+ 484: 2185+7	845D  1600    		ld d,0   
+ 485: 2192+20	845F  ED535981		ld (curcount),de   
+ 486:				
+ 487: 2212+10	8463  C9      		ret
+ 488:				
+ 489:					
+ 490:     -	C000          		org $c000
+ 491:					
+ 492:     -	C000          	mididata:
+ 493:				
+ 494:     -	8290          		end main 
+
+
+
+Statistics:
+
+     4	passes
+     0	jr promotions
+    72	symbols
+   820	bytes
+
+
+
+Symbol Table:
+
+@DSP           =33        51
+@DSPLY         =4467      17511
+@EXIT          =402D      16429
+@KBD           =2B        43
+@KEY           =49        73
+@abort         =4030      16432
+@close         =4428      17448
+@error         =4409      17417
+@fspec         =441C      17436
+@init          =4420      17440
+@open          =4424      17444
+@read          =4436      17462
+@write         =4439      17465
+ENTER          =0D        13
+MySafeStack    =A000      40960
+XMEMH          =42        66
+XMEML          =41        65
+allnotesoff     83DD      33757
+avail           8334      33588
+byte2ascii      83DE      33758
+convnibble      83E8      33768
+curcount        8159      33113
+curcounth       815A      33114
+dcb             8160      33120
+diskerror       843B      33851
+diskreadok      843A      33850
+emptyline       802B      32811
+endm0           80F8      33016
+endm1           80F9      33017
+endm2           810F      33039
+endm3           8110      33040
+endm4           812F      33071
+endm5           8156      33110
+endofsong       836A      33642
+errorm          8000      32768
+filename        8020      32800
+filenamenr      8024      32804
+get_timer       83C2      33730
+iobuf           8190      33168
+lastbyte        8157      33111
+load_page       82C9      33481
+loaddisk        83F2      33778
+loop            83BB      33723
+lrlerr         =2A        42
+main            8290      33424
+maxpage         802A      32810
+midiadr         815B      33115
+midiadrh        815C      33116
+midiavail       8321      33569
+mididata        C000      49152
+newbank         8451      33873
+next            8319      33561
+nextbank        8395      33685
+notyet          8367      33639
+outa            83A9      33705
+process         832F      33583
+readfile        840F      33807
+rloop           8416      33814
+rok             8421      33825
+selectmempage   8445      33861
+short_delay     83B8      33720
+showloading     80DE      32990
+showplaying     80EC      33004
+startplayback   82F1      33521
+timer           815E      33118
+timer0          815D      33117
+timer0delta     8158      33112
+timerh          815F      33119
+title1          802C      32812
+title2          8065      32869
+title3          8073      32883
+title4          80AA      32938
