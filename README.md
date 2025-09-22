@@ -124,10 +124,29 @@ As already mentioned, you should also run a memory test with X-MEM/80. I had (pa
 
 Currently, the following SuperMem software has been shown to work; 
 disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jengun)
-- [LeScript 2.02](trs80/m1/LeScript-2.02.jv3)
-- [MemTest](trs80/m1/memtest.jv3)
-- [Hyperdrive for LDOS](trs80/m1/hyperdrive.jv3)
-- [Sidekick for NEWDOS/80 by Jens Günther](trs80/m1/sidekick.jv3)  
+- [LeScript 2.02](trs80/m1/LeScript-2.02.jv3). 
+  Disclaimer: note that LeScript *appears* to be working, but that
+  the memory it reports doesn't seem to make sense. And I haven't
+  tested it thoroughly; it should be tested for text memory
+  "corruption" or text duplication on very long texts 
+  at some point (probably requires a harddisk or FreHD in the 
+  equation). The background here is that LeScript seems to always 
+  assume that a "real" SuperMem is installed. Both 
+  LeScript as well as the `MEMTEST/CMD` program (below) incorrectly display an additional 64 KBs of memory. These programs are
+  also displaying an additional 64 KBs with a plain (unextended) 
+  Model 1... so without any 
+  SuperMem or X-MEM/80 installed! Hence, I believe that the memory detection routines in these program are either buggy or *simply assume* another 64 KBs from an installed SuperMem, without actually checking
+  for its presence. Both programs seem to be working 
+  fine, but I cannot gurantee that LeScript will not corrupt 
+  your very large text files as the exceed a critical page number / text
+  length, as I don't know the details of the memory organization. 
+  However, it seems to assume that the 32 KB memory pages `0x00` and `0x10`, as well as `0x01` and
+  `0x11` are independent pages, but they are actually *identical physical pages* with X-MEM/80. You have been warned! 
+- [MemTest](trs80/m1/memtest.jv3). Like LeScript, the program will report
+  and extra 64 KBs, even with a plain (unextended) Model 1... however,
+  it is still successfully testing the SRAM it seems. 
+- [Hyperdrive for LDOS](trs80/m1/hyperdrive.jv3).
+- [Sidekick for NEWDOS/80 by Jens Günther](trs80/m1/sidekick.jv3).
 
 ### MIDI/80 + X-MEM/80 Software 
 
