@@ -69,6 +69,7 @@ tbd
 
 ### Model III Version 
 
+tbd
 
 ## Demo Videos
 
@@ -96,7 +97,7 @@ With the [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3), you should see the foll
 That being said, for me, X-MEM/80 is running stable, with both my Model 1's. And my 2nd Model 1 even has a CP/M Mapper CPU card installed. 
 
 
-## Software 
+## Software for X-MEM/80 
 
 ### Model 1 Software 
 
@@ -119,7 +120,7 @@ To check proper operation of X-MEM/80 and its two modes, use the following two B
 
 As already mentioned, you should also run a memory test with X-MEM/80. I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. 
 
-#### SuperMem Software Compatible with X-MEM/80 SuperMem Mode 
+#### SuperMem Software Compatible with X-MEM/80 in 32 KB / SuperMem Mode 
 
 Currently, the following SuperMem software has been shown to work; 
 disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jengun)
@@ -154,22 +155,22 @@ build of X-MEM/80. Costs are in the ~35 USD range.
 
 ### Schematics 
 
-#### Model 1
+#### Model 1 Version
 
 [Model 1 Version (PDF)](gerbers/m1/schematics-m1.pdf)
 
 ![Schematics Model 1](gerbers/m1/schematics-m1.png)
 
-#### Model III 
+#### Model III Version
 
 tbd
 
 ### Bill of Material (BOM)
 
-#### Model 1 
+#### Model 1 Version
 
 - [Alliance AS6C4008-55PCN 512Kx8 SRAM](https://www.digikey.com/en/products/detail/alliance-memory-inc/AS6C4008-55PCN/4234586?msockid=1d03aa979c26663d300bbf4e9d2667d6) + 32 pin DIP socket
-- 40 pin female IDC box header 
+- 40 pin IDC box header 
 - 40 pin female card edge connector, angled 
 - GAL20V10 + 24 pin DIP socket (and ability to program it, e.g., using a TL-866 MiniPro Programmer) 
 - 1x 74LS244 + 20 pin DIP socket
@@ -179,7 +180,7 @@ tbd
 - [Standard 5V DV power plug jack (5.5x2.1mm socket)](https://www.amazon.com/gp/product/B081DYQSC9/)
 - [Standard 5V "wall wart" external power supply (center positive)](https://www.amazon.com/gp/product/B08722QC75)
 
-#### Model III
+#### Model III Version
 
 tbd 
 
@@ -192,7 +193,7 @@ be send-off to major PCB manufacturers (PCBWay, Seeed, OshPark, JLCPCB):
 
 The gerbers are [here](gerbers/m1/gerbers-v4.zip)
 
-#### Model 1 Version
+#### Model III Version
 
  tbd 
 
