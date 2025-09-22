@@ -114,7 +114,7 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
 - [LeScript 2.02](trs80/m1/LeScript-2.02.jv3)
 - [MemTest](trs80/m1/memtest.jv3)
 - [Hyperdrive for LDOS](trs80/m1/hyperdrive.jv3)
-- [Sidekick for NEWDOS/80](trs80/m1/sidekick.jv3)  
+- [Sidekick for NEWDOS/80 by Jens Günther](trs80/m1/sidekick.jv3)  
 
 
 ### MIDI/80 + X-MEM/80 Software 
