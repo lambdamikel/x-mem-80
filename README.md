@@ -128,7 +128,7 @@ tbd
 
 #### Model 1 
 
-- [Alliance AS6C4008-55PCN 512Kx8 SRAM](https://www.digikey.com/en/products/detail/alliance-memory-inc/AS6C4008-55PCN/4234586?msockid=1d03aa979c26663d300bbf4e9d2667d6)
+- [Alliance AS6C4008-55PCN 512Kx8 SRAM](https://www.digikey.com/en/products/detail/alliance-memory-inc/AS6C4008-55PCN/4234586?msockid=1d03aa979c26663d300bbf4e9d2667d6) + 32 pin DIP socket
 - 40 pin female IDC box header 
 - 40 pin female card edge connector, angled 
 - GAL20V10 + 24 pin DIP socket (and ability to program it, e.g., using a TL-866 MiniPro Programmer) 
