@@ -77,6 +77,24 @@ You can get a better understanding of X-MEM/80's capabilities and features by wa
 - [Septandy 2025 X-MEM/80 Demo Video](https://youtu.be/g7Nv64qDh84)
 - [Playback of larger than main memory MIDI files via X-MEM/80 and MIDI/80](https://youtu.be/HZcZIu-G5TI) 
 
+## X-MEM/80 Diagnostics 
+
+You should run a memory test with your new X-MEM/80. I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. You can also run a standard Model I memory test; in particular, some are even executing a "Worm Test" and run code from the upper 32 KBs, and not only writes and reads back random bist test patterns. 
+
+With the [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3), you should see the following (note that it doesn't quite report the right amount of memory for X-MEM/80 in SuperMem mode), but it will still check the memory: 
+
+ ![Memtest SuperMem](pics/xmem-memtest.jpg)
+
+ If you are getting errors here, then:
+
+ - check your connection / cables - maybe they are too long? Shielding them with aluminum foil might also help! 
+ - clean your expansion port connector - make sure you are getting good contact!
+ - try running it again without extra peripherals. In my case, I got a memory error once and only when MIDI/80 was connected behind X-MEM/80. The timing on the bus is tight - if your cables are too long, you will run into problems for sure. 
+ - try running it again without EI.
+ - try a different 5V power supply (noise in the PSU may also be a problem).
+
+That being said, for me, X-MEM/80 is running stable, with both my Model 1's. And my 2nd Model 1 even has a CP/M Mapper CPU card installed. 
+
 
 ## Software 
 
@@ -99,12 +117,7 @@ To check proper operation of X-MEM/80 and its two modes, use the following two B
   ![Memtest 2](pics/xmem-test2.jpg) 
   ![Memtest 2 result](pics/xmem-test2-res.jpg) 
 
-**Moreover, you should run a memory test.** I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. You can also run a standard Model I memory test; in particular, some are executing a "Worm Test" and run Code from the upper 32 KBs. 
-
-With the [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3), you should see the following (note that it doesn't quite report the right amount of memory for X-MEM/80 in SuperMem mode), but it will still check the memory: 
-
- ![Memtest SuperMem](pics/xmem-memtest.jpg)
-
+As already mentioned, you should also run a memory test with X-MEM/80. I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. 
 
 #### SuperMem Software Compatible with X-MEM/80 SuperMem Mode 
 
@@ -114,7 +127,6 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
 - [MemTest](trs80/m1/memtest.jv3)
 - [Hyperdrive for LDOS](trs80/m1/hyperdrive.jv3)
 - [Sidekick for NEWDOS/80 by Jens Günther](trs80/m1/sidekick.jv3)  
-
 
 ### MIDI/80 + X-MEM/80 Software 
 
