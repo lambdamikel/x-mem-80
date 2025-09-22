@@ -1,0 +1,33 @@
+binary-debuggable-source
+0000 0000 f memres.asm
+6000 6000 s 	org $6000 
+6000 6000 s 
+6000 6000 s 
+6000 6000 s XMEM		equ 	67	; both 32 KB 
+6000 6000 s XMEML		equ 	65	; lower XMEM 16 KB
+6000 6000 s XMEMH		equ 	66	; upper XMEM 16 KB 
+6000 6000 s 
+6000 6000 s main:
+6000 6000 d 3e00
+6000 6000 u 02 01
+6000 6000 s 	ld a,0 
+6002 6002 d d343
+6002 6002 u 02 01
+6002 6002 s 	out (XMEM), a	
+6004 6004 d d341
+6004 6004 u 02 01
+6004 6004 s 	out (XMEML), a 
+6006 6006 d d342
+6006 6006 u 02 01
+6006 6006 s 	out (XMEMH), a 
+6008 6008 s 	
+6008 6008 d c9
+6008 6008 u 01 01
+6008 6008 s 	ret 
+6009 6009 s 
+6009 6009 s 	end main 
+6000 e
+6000 a main
+0042 v XMEMH
+0041 v XMEML
+0043 v XMEM

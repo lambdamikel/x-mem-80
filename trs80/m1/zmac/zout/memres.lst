@@ -1,0 +1,34 @@
+   1:     -	6000          		org $6000 
+   2:				
+   3:				
+   4:     -	0043          	XMEM		equ 	67	; both 32 KB 
+   5:     -	0041          	XMEML		equ 	65	; lower XMEM 16 KB
+   6:     -	0042          	XMEMH		equ 	66	; upper XMEM 16 KB 
+   7:				
+   8:     -	6000          	main:
+   9:    0+7	6000  3E00    		ld a,0 
+  10:    7+11	6002  D343    		out (XMEM), a	
+  11:   18+11	6004  D341    		out (XMEML), a 
+  12:   29+11	6006  D342    		out (XMEMH), a 
+  13:					
+  14:   40+10	6008  C9      		ret 
+  15:				
+  16:     -	6000          		end main 
+
+
+
+Statistics:
+
+     3	passes
+     0	jr promotions
+     4	symbols
+     9	bytes
+
+
+
+Symbol Table:
+
+XMEM           =43        67
+XMEMH          =42        66
+XMEML          =41        65
+main            6000      24576
