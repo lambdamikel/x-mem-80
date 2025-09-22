@@ -23,25 +23,25 @@ A jumper allows configuration in two different modes - **SuperMem** and **X-MEM/
 
 The config jumper is shown in the top left corner here: 
 
-![Config](pics/xmem-config.JPG)
+![Config](pics/xmem-config.jpg)
 
 ### Model I Version 
 
 It plugs onto the Model 1 expansion port, either directly using the edge connector, or via a short cable. 
 
-![XMEM 2](pics/xmem-ei-cable.JPG)
+![XMEM 2](pics/xmem-ei-cable.jpg)
 
-![XMEM 2](pics/xmem-ei-cable2.JPG)
+![XMEM 2](pics/xmem-ei-cable2.jpg)
 
 It can be used with or without the Expansion Interface (EI).  
 
 If used without EI, then you will have 48 KBs of RAM available to ROM BASIC (as well as the extra memory banks, of course): 
 
-![XMEM](pics/xmem.JPG)
+![XMEM](pics/xmem.jpg)
 
 If used with the EI, then it "shadows" (i.e., disables reads from) the DRAM memory installed in the EI. No modifications to either the Model 1 or EI are necessary: 
 
-![XMEM 2](pics/xmem-ei.JPG)
+![XMEM 2](pics/xmem-ei.jpg)
 
 ### Model III Version
 
@@ -134,8 +134,13 @@ tbd
 - GAL20V10 + 24 pin DIP socket (and ability to program it, e.g., using a TL-866 MiniPro Programmer) 
 - 1x 74LS244 + 20 pin DIP socket
 - 2x 74LS374 + 20 pin DIP socket 
+<<<<<<< HEAD
 - 5 (5mm) LEDs of your liking and matching current limiting resitor (usually, 1 or 2 kOhm these days for the ultra-effecient and super bright LEDs - 330 Ohms are a thing of the past for LEDs!)
 - 6x 103 (10 nF cereamic) capacitors 
+=======
+- 5 (5mm) LEDs of your liking and matching current limiting resitors (1 or 2 kOhm)
+- 6 103 capactitors 
+>>>>>>> b99522e3af3acb550d64e44f576e797f465b020a
   [Standard 5V DV power plug jack (5.5x2.1mm socket)](https://www.amazon.com/gp/product/B081DYQSC9/)
 - [Standard 5V "wall wart" external power supply (center positive)](https://www.amazon.com/gp/product/B08722QC75)
 
@@ -156,6 +161,7 @@ The gerbers are [here](gerbers/m1/gerbers-v4.zip)
 
  tbd 
 
+<<<<<<< HEAD
 ### JEDEC Files for the GAL22V10 
 
 #### Model 1 Version 
@@ -164,6 +170,15 @@ The gerbers are [here](gerbers/m1/gerbers-v4.zip)
 
 #### Model III Version
 
+=======
+## JEDEC Files for the GAL22V10 
+
+**Model 1 Version:**
+- [GAL20V10 JED firmware file](firmware/m1/DECODER.jed)
+- [GAL20V10 PLD sources](firmware/m1/decoder.pld)
+
+**Model III Version:** 
+>>>>>>> b99522e3af3acb550d64e44f576e797f465b020a
 tbd 
 
 ## Acknowledgements
