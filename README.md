@@ -65,6 +65,8 @@ tbd
 
 - `GAL22V10` implements the address decoding and `RD`, `WR` signal forwarding to the EI. Two `74LS374` latches are used as 4 resp. 5 bit registers for the low and high page number. 
 
+- Upon powerup, the two (lower and higher) page registers in X-MEM/80 are in an undefined state. Before loading and executing a program that relies on upper memory and bank switching, the `MEMRES/CMD` (see below) should be executed to initialize the page registers to 0. Note that in X-MEM/80 mode (16 KB pages), both the lower and the higher page register are set to `0`, so the same 16 KB memory page appears both under `0x8000` and `0xC000`. 
+
 ### Model III Version 
 
 
@@ -80,18 +82,28 @@ You can get a better understanding of X-MEM/80's capabilities and features by wa
 
 ### Model 1 Software 
 
+#### X-MEM/80 Diagnostics Programs and Utilities 
+
+This is the most important X-MEM/80 utility: 
+
+- [X-MEM/80 reset software: `memres/cmd`](trs80/m1/zmac/memres.asm); can be found on most of the above disk images. In general, before loading and executing any program that makes use of X-MEM/80 oder SuperMem extended memory, you should reset the page registers to `0` with that utility. Else, if the program you are about to start is loading into and executing from the upper 32 KBs, then the first thing it might do is change the page number(s) (i.e., by initializing the page registers to `0`) and the program would "automagically" make itself disappear if it wasn't loaded into page 0 in the first place (i.e., `memres/cmd` hadn't been executed prior to loading and executing the program). 
+
+To check proper operation of X-MEM/80 and its two modes, use the following two BASIC diagnostic programs: 
+
+- [X-MEM/80 BASIC test software](trs80/m1/xmem80.jv3) for 32 KB / SuperMem mode: [`memtest/bas`](trs80/m1/memtest.txt). Make sure to start LDOS BASIC as follows: `BASIC(mem=32768)` (else, BASIC will claim the upper 32 KBs). Use this program to test proper operation of X-MEM/80; you should see the following output with the X-MEM/80 jumper in the left = 32 KB pages / SuperMem position: 
+  ![Memtest result](pics/xmem-test.jpg)
+- [X-MEM/80 BASIC test software](trs80/m1/xmem80.jv3) for 16 KB / X-MEM/80 mode: [`memtest2/bas`](trs80/m1/memtest2.txt). You should see the following output with the X-MEM/80 jumper in the right = 16 KB pages / X-MEM/80 position: 
+  ![Memtest result](pics/xmem-test2.jpg) 
+  ![Memtest result](pics/xmem-test2-res.jpg) 
+
+#### SuperMem Software Compatible with X-MEM/80 SuperMem Mode 
+
 Currently, the following SuperMem software has been shown to work; 
 disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jengun)
 - [LeScript 2.02](trs80/m1/LeScript-2.02.jv3)
 - [MemTest](trs80/m1/memtest.jv3)
 - [Hyperdrive for LDOS](trs80/m1/hyperdrive.jv3)
 - [Sidekick for NEWDOS/80](trs80/m1/sidekick.jv3)  
-- [X-MEM/80 reset software: `memres/cmd`](trs80/m1/zmac/memres.asm); can be found on most of the above disk images.  
-- [X-MEM/80 BASIC test software](trs80/m1/xmem80.jv3) for 32 KB / SuperMem mode: [`memtest/bas`](trs80/m1/memtest.txt). Make sure to start LDOS BASIC as follows: `BASIC(mem=32768)` (else, BASIC will claim the upper 32 KBs). Use this program to test proper operation of X-MEM/80; you should see the following output with the X-MEM/80 jumper in the left = 32 KB pages / SuperMem position: 
-  ![Memtest result](pics/xmem-test.jpg)
-- [X-MEM/80 BASIC test software](trs80/m1/xmem80.jv3) for 16 KB / X-MEM/80 mode: [`memtest2/bas`](trs80/m1/memtest2.txt). You should see the following output with the X-MEM/80 jumper in the right = 16 KB pages / X-MEM/80 position: 
-  ![Memtest result](pics/xmem-test2.jpg) 
-  ![Memtest result](pics/xmem-test2-res.jpg) 
 
 
 ### MIDI/80 + X-MEM/80 Software 
