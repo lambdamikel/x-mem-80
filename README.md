@@ -154,7 +154,7 @@ tbd
 - 2x 74LS374 + 20 pin DIP socket 
 - 5 (5mm) LEDs of your liking and matching current limiting resitor (usually, 1 or 2 kOhm these days for the ultra-effecient and super bright LEDs - 330 Ohms are a thing of the past for LEDs!)
 - 6x 103 (10 nF cereamic) capacitors 
-  [Standard 5V DV power plug jack (5.5x2.1mm socket)](https://www.amazon.com/gp/product/B081DYQSC9/)
+- [Standard 5V DV power plug jack (5.5x2.1mm socket)](https://www.amazon.com/gp/product/B081DYQSC9/)
 - [Standard 5V "wall wart" external power supply (center positive)](https://www.amazon.com/gp/product/B08722QC75)
 
 #### Model III
