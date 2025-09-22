@@ -82,6 +82,9 @@ You can get a better understanding of X-MEM/80's capabilities and features by wa
 
 ### Model 1 Software 
 
+You can find `.HFE` and `.JV3` disk images 
+in the [trs80/m1/](trs80/m1/) directory. 
+
 #### X-MEM/80 Diagnostics Programs and Utilities 
 
 This is the most important X-MEM/80 utility: 
@@ -101,10 +104,6 @@ To check proper operation of X-MEM/80 and its two modes, use the following two B
 With the [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3), you should see the following (note that it doesn't quite report the right amount of memory for X-MEM/80 in SuperMem mode), but it will still check the memory: 
 
  ![Memtest SuperMem](pics/xmem-memtest.jpg)
-
-
-
-
 
 
 #### SuperMem Software Compatible with X-MEM/80 SuperMem Mode 
