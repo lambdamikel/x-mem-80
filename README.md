@@ -134,13 +134,8 @@ tbd
 - GAL20V10 + 24 pin DIP socket (and ability to program it, e.g., using a TL-866 MiniPro Programmer) 
 - 1x 74LS244 + 20 pin DIP socket
 - 2x 74LS374 + 20 pin DIP socket 
-<<<<<<< HEAD
 - 5 (5mm) LEDs of your liking and matching current limiting resitor (usually, 1 or 2 kOhm these days for the ultra-effecient and super bright LEDs - 330 Ohms are a thing of the past for LEDs!)
 - 6x 103 (10 nF cereamic) capacitors 
-=======
-- 5 (5mm) LEDs of your liking and matching current limiting resitors (1 or 2 kOhm)
-- 6 103 capactitors 
->>>>>>> b99522e3af3acb550d64e44f576e797f465b020a
   [Standard 5V DV power plug jack (5.5x2.1mm socket)](https://www.amazon.com/gp/product/B081DYQSC9/)
 - [Standard 5V "wall wart" external power supply (center positive)](https://www.amazon.com/gp/product/B08722QC75)
 
@@ -161,7 +156,6 @@ The gerbers are [here](gerbers/m1/gerbers-v4.zip)
 
  tbd 
 
-<<<<<<< HEAD
 ### JEDEC Files for the GAL22V10 
 
 #### Model 1 Version 
@@ -170,15 +164,6 @@ The gerbers are [here](gerbers/m1/gerbers-v4.zip)
 
 #### Model III Version
 
-=======
-## JEDEC Files for the GAL22V10 
-
-**Model 1 Version:**
-- [GAL20V10 JED firmware file](firmware/m1/DECODER.jed)
-- [GAL20V10 PLD sources](firmware/m1/decoder.pld)
-
-**Model III Version:** 
->>>>>>> b99522e3af3acb550d64e44f576e797f465b020a
 tbd 
 
 ## Acknowledgements
