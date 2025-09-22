@@ -93,8 +93,19 @@ To check proper operation of X-MEM/80 and its two modes, use the following two B
 - [X-MEM/80 BASIC test software](trs80/m1/xmem80.jv3) for 32 KB / SuperMem mode: [`memtest/bas`](trs80/m1/memtest.txt). Make sure to start LDOS BASIC as follows: `BASIC(mem=32768)` (else, BASIC will claim the upper 32 KBs). Use this program to test proper operation of X-MEM/80; you should see the following output with the X-MEM/80 jumper in the left = 32 KB pages / SuperMem position: 
   ![Memtest result](pics/xmem-test.jpg)
 - [X-MEM/80 BASIC test software](trs80/m1/xmem80.jv3) for 16 KB / X-MEM/80 mode: [`memtest2/bas`](trs80/m1/memtest2.txt). You should see the following output with the X-MEM/80 jumper in the right = 16 KB pages / X-MEM/80 position: 
-  ![Memtest result](pics/xmem-test2.jpg) 
-  ![Memtest result](pics/xmem-test2-res.jpg) 
+  ![Memtest 2](pics/xmem-test2.jpg) 
+  ![Memtest 2 result](pics/xmem-test2-res.jpg) 
+
+**Moreover, you should run a memory test.** I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. You can also run a standard Model I memory test; in particular, some are executing a "Worm Test" and run Code from the upper 32 KBs. 
+
+With the [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3), you should see the following (note that it doesn't quite report the right amount of memory for X-MEM/80 in SuperMem mode), but it will still check the memory: 
+
+ ![Memtest SuperMem](pics/xmem-memtest.jpg)
+
+
+
+
+
 
 #### SuperMem Software Compatible with X-MEM/80 SuperMem Mode 
 
