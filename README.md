@@ -152,7 +152,7 @@ otherwise:
 You can get a better understanding of X-MEM/80's capabilities and features by watching these YouTube demo videos: 
 
 - [Septandy 2025 X-MEM/80 Model 1 Demo Video](https://youtu.be/g7Nv64qDh84)
-- [Septandy 2025 X-MEM/80 Model III Demo Video](https://youtu.be/)
+- [Septandy 2025 X-MEM/80 Model III Demo Video](https://youtu.be/YpyPIGRvEeQ)
 - [Playback of larger than main memory MIDI files via X-MEM/80 Model 1 and MIDI/80](https://youtu.be/HZcZIu-G5TI) 
 
 ## X-MEM/80 Diagnostics 
