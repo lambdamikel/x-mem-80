@@ -1,0 +1,127 @@
+Name     M3RAMEXT-DECODER ;
+PartNo   00 ;
+Date     19.09.2025 ;
+Revision 01 ;
+Designer Michael Wessel / LambdaMikel and Mark Pruden / Kiwisincebirth ;
+Company  Home ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+// GND = 12
+// VCC = 24
+
+//
+// GAL Inputs 
+//
+
+//
+// IO Addresses 
+//
+
+PIN [1..8] = [A0..7] ; 
+
+//
+// Upper 32 KB and 16 KB Pages 
+//
+
+PIN 9    =  A14 ;
+PIN 10   =  A15 ;
+
+//
+// Model III Z80 Control Bus 
+//
+
+PIN 11   =  IOREQ ;
+PIN 13   =  MREQ ;
+
+PIN 14   =  WR ; 
+PIN 15   =  RD ;
+
+//
+// Generated GAL Outputs 
+// 
+
+PIN 16   =  SET_L ; 
+PIN 17   =  SET_H ; 
+
+PIN 18   =  SEL_L ; 
+PIN 19   =  SEL_H ; 
+
+PIN 20   =  RD_M3 ; 
+PIN 21   =  WR_M3 ;
+
+PIN 22   =  MREQ_EXT ;
+
+PIN 23   =  IN_SEL ;
+
+//
+// Upper 32 KB Bank: 0x8000 - 0xFFFF 
+// A15 = 1
+// 
+
+//
+// Upper 16 KB Banks: 0xC000 - 0xFFFF 
+// 
+
+H_16KB_BANK = A15 & A14 ;
+L_16KB_BANK = A15 & ! A14 ;
+
+//
+// MREQ Signal for X-MEM: Upper 32 KBs
+// 
+
+MREQ_EXT  = ! (! MREQ &   A15 ) ;
+
+//
+// Latch LOW / HIGH Page Registers 
+//
+
+// Write both registers 32 KB mode 
+// 0x67: 0100 0011
+
+// Write low registers 
+// 0x65: 0100 0001 
+
+// Write high registers 
+// 0x66: 0100 0010 
+
+IO_PAGE_SREG_ADDR_L  = !A7 & A6 & !A5 & !A4 & !A3 & !A2 & A0 ; 
+IO_PAGE_SREG_ADDR_H  = !A7 & A6 & !A5 & !A4 & !A3 & !A2 & A1 ;  
+
+SET_L = ! ( ! IOREQ & ! WR & IO_PAGE_SREG_ADDR_L ) ;
+SET_H = ! ( ! IOREQ & ! WR & IO_PAGE_SREG_ADDR_H ) ;
+
+//
+// Readback Page Registers 
+// Enable 74LS244 
+// for 65, 66, 67
+// 
+
+IO_PAGE_RREG_ADDR  = !A7 & A6 & !A5 & !A4 & !A3 & !A2 ;
+
+IOREQ_EXT = ! ( ! IOREQ & IO_PAGE_RREG_ADDR ) ; 
+
+IN_SEL = ! ( ! IOREQ & ! RD & IO_PAGE_RREG_ADDR ) ;  
+
+//
+// Enable Register Outputs 
+// for SRAM Read and for 74LS244 Readback  
+// 
+
+IO_PAGE_RREG_ADDR_L  = !A7 & A6 & !A5 & !A4 & !A3 & !A2 &       A0 ; // 65, 67 
+IO_PAGE_RREG_ADDR_H  = !A7 & A6 & !A5 & !A4 & !A3 & !A2 & A1 & !A0 ; // 66  
+
+SEL_L = ! ( ! MREQ_EXT & L_16KB_BANK # ! IOREQ_EXT & IO_PAGE_RREG_ADDR_L  ) ; // this selects lo register for port 65 = 01000001 and 67 = 01000011 and for low 16 KB RAM requests
+
+SEL_H = ! ( ! MREQ_EXT & H_16KB_BANK # ! IOREQ_EXT & IO_PAGE_RREG_ADDR_H );  // this selects hi register for port 66 = 01000010 and for high 16 KB RAM requests
+
+//
+// Generated RD and WR Signals for the Model III
+// Lower 32 KBs RAM Requests and IO Requests that are not for X-MEM/80 (65, 66, 67)
+//
+
+RD_M3 = ! ( ! RD & ! IOREQ & ! IO_PAGE_RREG_ADDR # ! RD & ! MREQ & ! A15 ); 
+WR_M3 = ! ( ! WR & ! IOREQ & ! IO_PAGE_RREG_ADDR # ! WR & ! MREQ & ! A15 ); 
+
+
