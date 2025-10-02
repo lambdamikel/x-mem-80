@@ -302,7 +302,8 @@ build of X-MEM/80. Costs are in the ~35 USD range.
 - GAL20V10(B,D) + 24 pin DIP socket (and ability to program it, e.g., using a TL-866 MiniPro Programmer) 
 - 1x 74LS244 + 20 pin DIP socket
 - 2x 74LS374 + 20 pin DIP socket 
-- 1x 74LS02 + 14 pin DIP socket 
+- 1x 74LS02 + 14 pin DIP socket
+- 7x 103 (10 nF cereamic) capacitors, 16 V, 5mm pin distance 
 - about 14" 3-wire cable and a [3-pin 2-position switch ON/ON](https://www.amazon.com/MTS-101-Position-Miniature-Toggle-Switch/dp/B0799HC3VY/) for configuration
 
 ### PCB Gerbers 
