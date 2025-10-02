@@ -1,7 +1,7 @@
 # X-MEM/80
 ## A Minimally Invasive Memory Extension for the TRS-80 Model 1 and III
-
- #### License: GPL 3
+### Authors: [Michael Wessel](https://github.com/lambdamikel) and [Mark Pruden](https://github.com/kiwisincebirth)
+#### License: GPL 3
 
 ## News 
 
