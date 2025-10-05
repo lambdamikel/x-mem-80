@@ -28,9 +28,9 @@ Unlike previous memory expansions for the Model I (i.e., SuperMem),
 this is a **minimally invasive memory expansion that does not
 require any soldering for installlation.**
 
-X-MMEM/80 is **partially** SuperMem compatible, as it allows to "bank" the
-upper 32 KBs (address range from `0x8000` to `0xFFFF`) with the memory
-on the card.
+X-MEM/80 is **partially** SuperMem compatible, as it allows to "bank"
+the upper 32 KBs (address range from `0x8000` to `0xFFFF`) with the
+memory on the card.
 
 A jumper allows configuration in two different modes - **SuperMem** and **X-MEM/80** modes: 
 
