@@ -233,7 +233,7 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
 
 #### MIDI/80 + X-MEM/80 Software 
 
-[MIDI/80](github.com/lambdamikel/MIDI-80) works with X-MEM/80 to enable playback of very large MIDI files. Check out [the demo.](https://youtu.be/HZcZIu-G5TI)
+[MIDI/80](https://github.com/lambdamikel/MIDI-80) works with X-MEM/80 to enable playback of very large MIDI files. Check out [the demo.](https://youtu.be/HZcZIu-G5TI)
 
 There are currently two MIDI playback programs: 
 - [`loader/cmd`](trs80/m1/zmac/loader.asm) uses the 32 KB / SuperMem mode. Here is the [demo disk from the above video.](trs80/m1/midi-80/bigsong32.jv3) In this mode, the playback program resides in the Model 1 memory starting from address `0x5400`, and the MIDI data is paged by switching the upper 32 KBs (from address `0x8000` to `0xFFFF`; although only the lower 16 KBs are used for the MIDI data). 
