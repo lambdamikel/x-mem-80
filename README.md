@@ -35,20 +35,21 @@ memory on the card.
 A jumper allows configuration in two different modes - **SuperMem** and **X-MEM/80** modes: 
 
 - in **SuperMem mode**, it offers **16 pages of 32 KBs**, which are
-- mapped into the `0x8000` to `0xFFFF` (= upper 32 KB) range. To
-- select the page number, `out 67,<page number>` is used. The page
-- number can also be read back via `inp 67`.  *Unlike SuperMem,
-- X-MEM/80 does not allow to bank the lower 32 KBs of the Model 1
-- memory.* However, the existing SuperMem software (see below) doesn't
-- seem to use this mode anyway, and works fine with X-MEM/80's
-- SuperMem mode.  in **X-MEM/80 mode**, it offers **32 pages of 16
-- KBs**, which can be mapped to the lower and higher 16 KB page of the
-- upper 32 KB range, i.e., the lower 16 KB page from `0x8000` to
-- `0xBFFF` and the higher 16 KB page from `0xC000` to `0xFFFF`. To
-- select the lower 16 KB page, `out 65, <lower page number>` is used,
-- and `out 66, <higher page number>` for the higher 16 KB page. Note
-- that it is possible to map the same pysical 16 KB page into both the
-- lower and higher address range (but this is usually not desirable).
+mapped into the `0x8000` to `0xFFFF` (= upper 32 KB) range. To select
+the page number, `out 67,<page number>` is used. The page number can
+also be read back via `inp 67`.  *Unlike SuperMem, X-MEM/80 does not
+allow to bank the lower 32 KBs of the Model 1 memory.* However, the
+existing SuperMem software (see below) doesn't seem to use this mode
+anyway, and works fine with X-MEM/80's SuperMem mode.
+
+- in **X-MEM/80 mode**, it offers **32 pages of 16 KBs**, which can be
+mapped to the lower and higher 16 KB page of the upper 32 KB range,
+i.e., the lower 16 KB page from `0x8000` to `0xBFFF` and the higher 16
+KB page from `0xC000` to `0xFFFF`. To select the lower 16 KB page,
+`out 65, <lower page number>` is used, and `out 66, <higher page
+number>` for the higher 16 KB page. Note that it is possible to map
+the same pysical 16 KB page into both the lower and higher address
+range (but this is usually not desirable).
 
 The config jumper is shown in the top left corner here: 
 
