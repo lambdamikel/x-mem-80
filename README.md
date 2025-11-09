@@ -230,6 +230,8 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
   it is still successfully testing the SRAM it seems. 
 - [Hyperdrive for LDOS](trs80/m1/hyperdrive.jv3).
 - [Sidekick for NEWDOS/80 by Jens Günther](trs80/m1/sidekick.jv3).
+  This emulates 4 "virtual" NEWDOS/80 machines. Use `Shift-Down Arrow-<0..3>`
+  to switch between machines. [Sourcecode courtesy of Jens.](trs80/m1/orig/sidekick.zip). 
 
 #### MIDI/80 + X-MEM/80 Software 
 
