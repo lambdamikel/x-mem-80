@@ -9,12 +9,13 @@
 
 The [TRS-80 Retro Store "Tuc's
 Workbench"](https://shop.tucs-workbench.com/) has started selling
-X-MEM/80s. You can get bare PCBs, kit versions, as well as fully
-assembled X-MEM/80s. I got a fully assembled Model 1 and the Model III
-version as well, and they are professionally made. So far, I tested
-the Model 1 version, and it worked perfect! I highly recommend
-them, but please note that I have no formal affiliation with
-Tuc's Workbench nor do I receive any of the proceeds:
+X-MEM/80s. You can get bare PCBs, kit versions, and fully assembled
+X-MEM/80s as well. I got a fully assembled Model 1 and the Model III
+version - they are professionally made. So far, I tested the Model 1
+version, and it worked perfectly! I highly recommend them, but please
+note that I have no formal affiliation with Tuc's Workbench, nor do I
+receive any of the proceeds. But I think that it is great that they
+are available for purchase from Tuc! Here are a couple pictures: 
 
 ![Tuc's Workbench X-MEM/80s Front](pics/tucs-workbench-a.jpg)
 
