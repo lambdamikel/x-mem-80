@@ -5,6 +5,21 @@
 
 ## News 
 
+### November 8th, 2025
+
+The [TRS-80 Retro Store "Tuc's
+Workbench"](https://shop.tucs-workbench.com/) has started selling
+X-MEM/80s. You can get bare PCBs, kit versions, as well as fully
+assembled X-MEM/80s. I got a fully assembled Model 1 and the Model III
+version as well, and they are professionally made. So far, I tested
+the Model 1 version, and it worked perfect! I highly recommend
+them, but please note that I have no formal affiliation with
+Tuc's Workbench nor do I receive any of the proceeds:
+
+![Tuc's Workbench X-MEM/80s Front](pics/tucs-workbench-a.jpg)
+
+![Tuc's Workbench X-MEM/80s Back](pics/tucs-workbench-b.jpg)
+
 ### October 1st, 2025
 
 - Official release of the Github and X-MEM/80 for the Model III. 
