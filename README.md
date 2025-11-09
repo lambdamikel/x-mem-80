@@ -255,16 +255,12 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
 
 `.MID` files are segmented into `/BIN` MIDI segments of 16 KBs by the
 [MIDI/80 Python-to-BIN
-Converter](https://github.com/lambdamikel/MIDI-80?tab=readme-ov-file#creating-your-own-songs-for-midi80-playback). These
-segments are then loaded into X-MEM/80 memory and played back in
-realtime once loaded. The converter produces `/BIN` files; you will
-have to renamed then into `/MID` files to be found be the following 2
-loader and playback programs. The loader program asks for the highest
-index / suffix number, i.e., the maximal `n` (when `n` is 0 to 9) of
-the `SONG<n>/MID` files that the Python converter produced. It then
-loads all the segments into X-MEM/80 memory and plays them back.
+Converter](https://github.com/lambdamikel/MIDI-80?tab=readme-ov-file#creating-your-own-songs-for-midi80-playback). The
+converter produces `/BIN` files; you will have to rename them to
+`/MID` files so that they can be found be the following loader and
+playback programs. 
 
-There are three versions of the loader: 
+There are three versions of the loader and playback program: 
 
 - [`loader/cmd`](trs80/m1/zmac/loader.asm) uses the 32 KB / SuperMem
 mode. Here is the [demo disk from the above
@@ -272,7 +268,7 @@ video.](trs80/m1/midi-80/bigsong32.jv3) In this mode, the playback
 program resides in the Model 1 memory starting from address `0x5400`,
 and the MIDI data is paged by switching the upper 32 KBs (from address
 `0x8000` to `0xFFFF`; although only the lower 16 KBs are used for the
-MIDI data).
+MIDI data). 
 
 - [`loader2/cmd`](trs80/m1/zmac/loader2.asm) uses the 16 KB / X-MEM/80
 mode. Here is the [demo disk from the above
@@ -281,9 +277,7 @@ program resides in lower 16 KB page in X-MEM/80 starting from address
 `0x8000`; make sure to use `memres/cmd` to initialize the page
 registers to page 0 before starting `loader2/cmd`. The MIDI data is
 paged by switching the upper 16 KBs (from address `0xC000` to
-`0xFFFF`).  Note that a very short expansion port cable connecting
-MIDI/80 to the X-MEM/80 expansion port passthrough connector is
-recommended, and an even shorted cable from MIDI/80 to the EI.
+`0xFFFF`).  
 
 - [`bigload/cmd`](trs80/m1/bigload.asm) is like `loader2/cmd`, but
 uses alphabetic suffixes `A` to `Z`, so it supports songs with up to
@@ -299,6 +293,10 @@ floppy emulator.
 ![MIDI/80 and X-MEM/80](pics/xmem-midi80-1.jpg)
 
 ![MIDI/80 and X-MEM/80](pics/xmem-midi80-2.jpg)
+
+Note that a very short expansion port cable connecting MIDI/80 to the
+X-MEM/80 expansion port passthrough connector is recommended, and an
+even shorted cable from MIDI/80 to the EI.
 
 ### Model III Software 
 
