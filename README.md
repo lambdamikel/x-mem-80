@@ -257,10 +257,8 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
 [MIDI/80 Python-to-BIN
 Converter](https://github.com/lambdamikel/MIDI-80?tab=readme-ov-file#creating-your-own-songs-for-midi80-playback). The
 converter produces `/BIN` files; you will have to rename them to
-`/MID` files so that they can be found be the following loader and
-playback programs. 
-
-There are three versions of the loader and playback program: 
+`/MID` files so that they can be found by the following
+loader-and-playback programs; there are currently three versions:
 
 - [`loader/cmd`](trs80/m1/zmac/loader.asm) uses the 32 KB / SuperMem
 mode. Here is the [demo disk from the above
