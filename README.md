@@ -277,7 +277,7 @@ registers to page 0 before starting `loader2/cmd`. The MIDI data is
 paged by switching the upper 16 KBs (from address `0xC000` to
 `0xFFFF`).  
 
-- [`bigload/cmd`](trs80/m1/bigload.asm) is like `loader2/cmd`, but
+- [`bigload/cmd`](trs80/m1/zmac/bigload.asm) is like `loader2/cmd`, but
 uses alphabetic suffixes `A` to `Z`, so it supports songs with up to
 26 16 KB segments. Instead of asking for a single digit number `n`, it
 will ask you for the largest letter (`A` to `Z`) of the highest
