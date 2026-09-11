@@ -42,7 +42,7 @@ the RF shielding in the Model III needs to be removed.
 
 Unlike previous memory expansions for the Model I (i.e., SuperMem),
 this is a **minimally invasive memory expansion that does not
-require any soldering for installlation.**
+require any soldering for installation.**
 
 X-MEM/80 is **partially** SuperMem compatible, as it allows to "bank"
 the upper 32 KBs (address range from `0x8000` to `0xFFFF`) with the
@@ -64,7 +64,7 @@ i.e., the lower 16 KB page from `0x8000` to `0xBFFF` and the higher 16
 KB page from `0xC000` to `0xFFFF`. To select the lower 16 KB page,
 `out 65, <lower page number>` is used, and `out 66, <higher page
 number>` for the higher 16 KB page. Note that it is possible to map
-the same pysical 16 KB page into both the lower and higher address
+the same physical 16 KB page into both the lower and higher address
 range (but this is usually not desirable).
 
 The config jumper is shown in the top left corner here: 
@@ -174,7 +174,7 @@ You can get a better understanding of X-MEM/80's capabilities and features by wa
 
 ## X-MEM/80 Diagnostics 
 
-You should run a memory test with your new X-MEM/80. I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. You can also run a standard Model 1 memory test; in particular, some are even executing a "Worm Test" and run code from the upper 32 KBs, and not only writes and reads back random bist test patterns.
+You should run a memory test with your new X-MEM/80. I had (partially) defect Alliance SRAMs in the past. There is no X-MEM/80 memory test yet, but you can use  [`Anitek's MEMTEST/CMD`](trs80/m1/memtest.jv3) in 32 KB / SuperMem mode. You can also run a standard Model 1 memory test; in particular, some are even executing a "Worm Test" and run code from the upper 32 KBs, and not only writes and reads back random bit test patterns.
 
 For the Model III, the software is identical, but I have included
 [Model III LDOS 5.4.1 images with the memory test (BASIC
@@ -236,7 +236,7 @@ disk images have been kindly supplied by [Jens Günther:](https://gitlab.com/jen
   Model 1... so without any 
   SuperMem or X-MEM/80 installed! Hence, I believe that the memory detection routines in these program are either buggy or *simply assume* another 64 KBs from an installed SuperMem, without actually checking
   for its presence. Both programs seem to be working 
-  fine, but I cannot gurantee that LeScript will not corrupt 
+  fine, but I cannot guarantee that LeScript will not corrupt 
   your very large text files as the exceed a critical page number / text
   length, as I don't know the details of the memory organization. 
   However, it seems to assume that the 32 KB memory pages `0x00` and `0x10`, as well as `0x01` and
@@ -340,8 +340,8 @@ build of X-MEM/80. Costs are in the ~35 USD range.
 - GAL20V10(B,D) + 24 pin DIP socket (and ability to program it, e.g., using a TL-866 MiniPro Programmer) 
 - 1x 74LS244 + 20 pin DIP socket
 - 2x 74LS374 + 20 pin DIP socket 
-- 1 5mm LED of your liking and a matching current limiting resitor (usually, 1 or 2 kOhm these days for the ultra-effecient and super bright LEDs - 330 Ohms are a thing of the past for LEDs!)
-- 6x 103 (10 nF cereamic) capacitors, 16 V, 5mm pin distance 
+- 1 5mm LED of your liking and a matching current limiting resistor (usually, 1 or 2 kOhm these days for the ultra-efficient and super bright LEDs - 330 Ohms are a thing of the past for LEDs!)
+- 6x 103 (10 nF ceramic) capacitors, 16 V, 5mm pin distance 
 - [Standard 5V DV power plug jack (5.5x2.1mm socket)](https://www.amazon.com/gp/product/B081DYQSC9/)
 - [Standard 5V "wall wart" external power supply (center positive)](https://www.amazon.com/gp/product/B08722QC75)
 - Single row pin header (3) and a jumper 
@@ -356,7 +356,7 @@ build of X-MEM/80. Costs are in the ~35 USD range.
 - 1x 74LS244 + 20 pin DIP socket
 - 2x 74LS374 + 20 pin DIP socket 
 - 1x 74LS02 + 14 pin DIP socket
-- 7x 103 (10 nF cereamic) capacitors, 16 V, 5mm pin distance 
+- 7x 103 (10 nF ceramic) capacitors, 16 V, 5mm pin distance 
 - about 14" 3-wire cable and a [3-pin 2-position switch ON/ON](https://www.amazon.com/MTS-101-Position-Miniature-Toggle-Switch/dp/B0799HC3VY/) for configuration
 
 ### PCB Gerbers 
