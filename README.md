@@ -3,8 +3,7 @@
 ### Authors: [Michael Wessel](https://github.com/lambdamikel) and [Mark Pruden](https://github.com/kiwisincebirth)
 #### License: GPL 3
 
-## News 
-
+## Latest News
 ### November 8th, 2025
 
 The [TRS-80 Retro Store "Tuc's
