@@ -4,6 +4,7 @@
 #### License: GPL 3
 
 ## Latest News
+
 ### November 8th, 2025
 
 The [TRS-80 Retro Store "Tuc's
