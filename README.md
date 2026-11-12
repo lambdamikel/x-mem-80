@@ -6,6 +6,18 @@
 
 ## Latest News
 
+### November 12th, 2026
+
+[CPC Lisp](https://github.com/lambdamikel/cpc-lisp-machine-os), a Lisp
+machine made for the Amstrad CPC, now runs on X-MEM/80, on the Model 1
+and the Model III: its six 16 KB ROM images are paged into X-MEM/80's
+window at &C000, and its RAM disc uses the spare pages -- a first real
+application for the X-MEM mode. The discs are with its
+[releases](https://github.com/lambdamikel/cpc-lisp-machine-os/releases).
+
+**Talker/80 owners on a Model 1:** reprogram Talker/80's U1 to use it
+with X-MEM/80 -- see [Using X-MEM/80 with Talker/80](#using-x-mem80-with-talker80).
+
 ### November 8th, 2025
 
 The [TRS-80 Retro Store "Tuc's
@@ -311,6 +323,29 @@ The `MEMRES/CMD`, and memory tests (Anitek `MEMTEST/CMD`, as well as the X-MEM/8
 See [here.](trs80/m3/midi-80/) As described for for the Model 1
 version - `loader/cmd` for the 32 KB mode, and `loader2/cmd` for the
 16 KB mode. Note that the switch / jumper config must match. 
+
+## Using X-MEM/80 with Talker/80
+
+On a **Model 1**, the [Talker/80](https://github.com/lambdamikel/Talker-80)
+address decoder (U1, a GAL22V10) answers ports 0-3, 8-11, 64-67 and
+72-75 -- as the original VS-100 did, for compatibility -- and that
+includes X-MEM/80's page registers, **ports 65 and 66**. Every page
+switch then also reaches Talker/80, as a byte of text. A program that
+pages often fills Talker/80's buffer with page numbers: its LEDs flicker,
+and it falls silent. [CPC Lisp](https://github.com/lambdamikel/cpc-lisp-machine-os),
+which switches pages thousands of times a second, spoke once and then
+nothing.
+
+**The fix: program U1 with
+[`Talker80-decoder-xmem.jed`](https://github.com/lambdamikel/Talker-80/blob/master/src/gal22v10/m1/Talker80-decoder-xmem.jed)** from the Talker/80 repository
+([why, in detail](https://github.com/lambdamikel/Talker-80#the-model-1-address-decoder-and-x-mem80)). It answers ports 8-11 only in the native
+(Epson, DECtalk) modes, clear of X-MEM/80's 64-67; the VS-100 and TRS
+Voice Synthesizer modes keep their decoding, so their software works as
+before. Tested on a Model 1 with X-MEM/80: CPC Lisp speaks and sings,
+and VOICDEMO still runs.
+
+The **Model III** Talker/80 decodes port 11 alone: it works with
+X-MEM/80 as it is.
 
 ## X-MEM/80 Hardware
 
